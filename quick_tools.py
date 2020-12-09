@@ -2,7 +2,13 @@ import sqlite3
 from os import path
 
 def get_rooms(db_path):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'SELECT room_name FROM Rooms;'
@@ -14,7 +20,13 @@ def get_rooms(db_path):
 	return rooms
 
 def add_room(db_path, room_name, room_type):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'INSERT INTO Rooms (room_name,room_type) VALUES (?,?)'
@@ -24,7 +36,13 @@ def add_room(db_path, room_name, room_type):
 
 
 def delete_room(db_path, room_name):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'DELETE FROM Rooms WHERE room_name=?'
@@ -34,7 +52,13 @@ def delete_room(db_path, room_name):
 
 
 def get_users(db_path):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'SELECT user_name FROM Users;'
@@ -47,7 +71,13 @@ def get_users(db_path):
 
 
 def add_user(db_path, user_name, user_role, user_rights, user_password):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'INSERT INTO Users (user_name, user_role, user_rights, user_password) VALUES (?,?,?,?)'
@@ -57,7 +87,13 @@ def add_user(db_path, user_name, user_role, user_rights, user_password):
 
 
 def delete_user(db_path, user_name):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
+
 	cursor = connect.cursor()
 
 	sql = 'DELETE FROM Users WHERE user_name=?'
@@ -66,7 +102,12 @@ def delete_user(db_path, user_name):
 	connect.commit()
 
 def create_db(db_path):
-	connect = sqlite3.connect(db_path)
+	try:
+		connect = sqlite3.connect(db_path)
+	
+	except sqlite3.OperationalError:
+		print('\nError in get_rooms(..), wrong path given !\n')
+		return
 
 	cursor = connect.cursor()
 
@@ -74,7 +115,6 @@ def create_db(db_path):
 	cursor.execute('CREATE TABLE Users ([id_user] INTEGER PRIMARY KEY,[user_name] text UNIQUE, [user_role] integer, [user_rights] integer, [user_password] text)')
 
 	connect.commit()
-
 
 
 # if not(path.exists('quick_chat.db')):
