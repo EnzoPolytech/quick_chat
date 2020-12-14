@@ -58,7 +58,18 @@ def delete_room(db_path, room_name):
 		print('Error in delete_room(..), wrong path given ! .. ok\n')
 		return
 
+	exist = 0
+
 	cursor = connect.cursor()
+
+	rooms_list = get_rooms(db_path)
+
+	for room in rooms_list:
+		if room == room_name:
+			exist = 1
+
+	if exist == 0:
+		print('Error in delete_room(..), cannot delete a room that does not exist !')
 
 	sql = 'DELETE FROM Rooms WHERE room_name=?'
 
@@ -109,7 +120,18 @@ def delete_user(db_path, user_name):
 		print('Error in delete_user(..), wrong path given ! .. ok\n')
 		return
 
+	exist = 0
+
 	cursor = connect.cursor()
+
+	user_list = get_users(db_path)
+
+	for user in user_list:
+		if user == user_name:
+			exist = 1
+
+	if exist == 0:
+		print('Error in delete_user(..), cannot delete a user that does not exist !')
 
 	sql = 'DELETE FROM Users WHERE user_name=?'
 
