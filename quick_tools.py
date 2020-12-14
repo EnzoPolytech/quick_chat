@@ -7,7 +7,7 @@ def get_rooms(db_path):
 	
 	except sqlite3.OperationalError:
 		print('Error in get_rooms(..), wrong path given !')
-		return
+		return False
 
 	cursor = connect.cursor()
 

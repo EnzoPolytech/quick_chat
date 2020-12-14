@@ -19,10 +19,15 @@ class TestToolsMethods(unittest.TestCase):
 	# ------------------------ #
 
 	def test_get_rooms_connect(self):
-		rooms = get_rooms(self.wrong_path)
-
+		self.assertFalse(get_rooms(self.wrong_path))
+    
 	def test_get_rooms(self):
+		rooms = get_rooms(self.right_path)
 		self.assertEqual(get_rooms(self.right_path), [])
+		add_room(self.right_path, 'room0', 'public')	
+		add_room(self.right_path, 'room1', 'public')
+		delete_room(self.right_path, 'room0')	
+		self.assertEqual(get_rooms(self.right_path), ['room1'])
 
 	# ----------------------- #
 	# TEST ADD ROOM FUNCTIONS #
@@ -67,7 +72,7 @@ class TestToolsMethods(unittest.TestCase):
 
 	def test_add_user_connect(self):
 		# test connect wrong path
-		add_room(self.wrong_path, 'charlie.o', 0, 0, 'password')
+		add_user(self.wrong_path, 'charlie.o', 0, 0, 'password')
 
 	def test_add_user_name(self):
 		# test unique user name
