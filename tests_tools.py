@@ -67,7 +67,7 @@ class TestToolsMethods(unittest.TestCase):
 
 	def test_add_user_connect(self):
 		# test connect wrong path
-		add_room(self.wrong_path, 'charlie.o', 0, 0, 'password')
+		add_user(self.wrong_path, 'charlie.o', 0, 0, 'password')
 
 	def test_add_user_name(self):
 		# test unique user name
@@ -95,6 +95,27 @@ class TestToolsMethods(unittest.TestCase):
 	def tearDown(self):
 		# Db remove :
 		os.remove("quick_chat.db")
+
+	# ---------------------- #
+	# TEST DELETE FUNCTIONS  #
+	# ---------------------- #
+
+	def test_delete_room(self):
+		# add and delete a room
+		add_room(self.right_path, 'room0', 'public')
+		delete_room(self.right_path, 'room0')
+		self.assertEqual(get_rooms(self.right_path), [])
+		# try to delete a room that does not exist
+		delete_room(self.right_path, 'room0')
+
+	def test_delete_user(self):
+		# check if the room has been deleted
+		add_user(self.right_path, 'yann.c', 0, 0, 'password')
+		delete_user(self.right_path, 'yann.c')
+		self.assertEqual(get_users(self.right_path), [])
+		# try to delete a user that does not exist
+		delete_user(self.right_path, 'yann.c')
+
 
 if __name__ == '__main__':
 
