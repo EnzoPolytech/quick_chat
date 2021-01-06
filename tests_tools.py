@@ -30,26 +30,28 @@ class TestToolsMethods(unittest.TestCase):
 
 	def test_add_room_funct(self):
 		# correct add public room
+		# self.assertTrue(add_room(self.right_path, 'room0', 'public'))
 		add_room(self.right_path, 'room0', 'public')
 
 		# correct add private room (what about right ?)
-		add_room(self.right_path, 'room1', 'private')
+		self.assertTrue(add_room(self.right_path, 'room1', 'private'))
 
 	def test_add_room_connect(self):
 		# test connect wrong path
-		add_room(self.wrong_path, 'room3', 'public')
+		self.assertEqual(add_room(self.wrong_path, 'room3', 'public'), -4)
 
 	def test_add_room_name(self):
 		# test unique room name
 		add_room(self.right_path, 'room0', 'public')
+		self.assertEqual(add_room(self.right_path, 'room0', 'public'), -1)
 
 	def test_add_room_type_name(self):
 		# test wrong type room name
-		add_room(self.right_path, 12, 'public')
+		self.assertEqual(add_room(self.right_path, 12, 'public'), -3)
 
 	def test_add_room_type_type(self):
 		# test wrong type room type
-		add_room(self.right_path, 'room2', 13)
+		self.assertEqual(add_room(self.right_path, 'room2', 13), -2)
 
 	# ----------------------- #
 	# TEST ADD USER FUNCTIONS #
