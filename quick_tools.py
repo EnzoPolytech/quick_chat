@@ -19,36 +19,39 @@ def get_rooms(db_path):
 
 	return rooms
 
+# CODE ERREURS :
+# -4 : connect failed
+# -3 : wrong type given for room name
+# -2 : wrong type given for room type
+# -1 : room name already exist
+
 def add_room(db_path, room_name, room_type):
 	try:
 		connect = sqlite3.connect(db_path)
 	
 	except sqlite3.OperationalError:
-		print('Error in add_room(..), wrong path given !')
-		return
+		return -4
 
 	cursor = connect.cursor()
 
 	if (type(room_name) != str):
-		print('Error in add_room(..), wrong type given for room name !')
-		return
+		return -3
 
 	if (type(room_type) != str):
-		print('Error in add_room(..), wrong type given for room type !')
-		return
+		return -2
 
 	names_list = get_rooms(db_path)
 
 	for name in names_list:
 		if name == room_name:
-			print('Error in add_room(..), room name already exist !')
-			return
+			return -1
 
 	sql = 'INSERT INTO Rooms (room_name,room_type) VALUES (?,?)'
 
 	cursor.execute(sql,(room_name, room_type))
 	connect.commit()
 
+	return True
 
 def delete_room(db_path, room_name):
 	try:
